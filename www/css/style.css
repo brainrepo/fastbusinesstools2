@@ -89,70 +89,94 @@ p{
 
 
 .primary-panel {
-    background: #fff;
-    background-clip: padding-box;
+    background: #fff!important;
     padding: 18px 18px 18px 18px;
     position: absolute;
     top:0px;
+    left:0;
+    right: 0;
     height: 25%;
 }
 
 
 
 
-.control-group {
-    margin-top:8px;
-    padding: 0 10px 0 10px;
-}
-    .control-group:first-child {
-        margin-top:0px;
-    }
-
-input[type=tel] {
+.calc-screen {
     font-family: mainfont;
     border: 0;
     color: #333;
-    font-size: 35px;
+    font-size: 40px;
+    line-height: 40px;
     letter-spacing: -1px;
     outline: 0;
     overflow: hidden;
-    position: relative;
+    position: absolute;
     text-overflow: ellipsis;
     white-space: nowrap;
-    height: 61px!important;
-    line-height: 65px!important;
-    width:100%;
+    left:0;
+    right: 0;
     text-align: right;
+    top: 50%;
+    margin-top: calc(-40px/2)!important;
+    padding-left: 10px;
+    padding-right: 10px;
 }
-.floating-label {
-    font-family: titlefont;
-    text-transform: uppercase;
-    position: relative;
-    color: #AAA;
 
+
+#vat-selector {
+    position:absolute;
+    left:10px;
+    top:50%;
+    margin-top: calc(-40px/2)!important;
+    border:1px solid #CCCCCC;
+    color:#333333;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-family: mainfont;
 }
-.floating-label label {
+
+.vat-selector-list {
+    color: #ffffff!important;
     position: absolute;
-    font-size: 11px;
-    -webkit-transform: translateY(20px);
-    -ms-transform: translateY(20px);
-    transform: translateY(20px);
-    transition: -webkit-transform 0.15s ease-in;
-    transition: transform 0.15s ease-in;
-    z-index:0;
-    opacity: 0;
+    bottom:0px;
+    height:75%;
+    width:100%;
+    transition: all  0.5s ease-out;
+    -webkit-transition: all 0.5s  ease-out;
 }
-.floating-label label.active {
-    -webkit-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    transform: translateY(0px);
-    z-index:10;
+
+.vat-selector-list .button{
+    display: block;
+    height: calc(100% /5);
+    background: #333!important;
+    color: #ffffff!important;
+    font-family: mainfont;
+    text-transform: uppercase;
+    font-size: 25px;
+    width: 100%;
+    border: none;
+    transition: all  0.5s linear;
+    -webkit-transition: all 0.5s  linear;
+    border-radius: 0!important;
+    text-align: center!important;
+    border-bottom: 1px solid rgba(0,0,0,0.1)!important;
+}
+
+.vat-selector-list  .close{
+    background-color: #a5cc00!important;
     opacity: 1;
 }
 
+.vat-selector-list button:active{
+    background-color: #cccccc!important;
+    transition: all 0.5s linear;
+    -webkit-transition: all 0.5s  linear;
+}
 
-
-
+.vat-selector-list .title{
+    text-transform: none!important;
+}
 
 .num-pad{
     background: #333!important;
@@ -162,6 +186,7 @@ input[type=tel] {
     height:75%;
     width:100%;
 }
+
 .num-pad .button{
     position:absolute;
 }
@@ -176,9 +201,11 @@ input[type=tel] {
 
 .num-pad .c1{
     left:0;
+    border-right: 1px solid rgba(0,0,0,0.1);
 }
 .num-pad .c2{
     left: calc(100%/3);
+    border-right: 1px solid rgba(0,0,0,0.1)!important;
 }
 .num-pad .c2h{
     left: calc(100%/2);
@@ -188,15 +215,19 @@ input[type=tel] {
 }
 .num-pad .r1{
     top:0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 .num-pad .r2{
     top:20%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 .num-pad .r3{
     top:40%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 .num-pad .r4{
     top:60%;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 .num-pad .r5{
     top:80%;
@@ -223,15 +254,72 @@ input[type=tel] {
     color: #ffffff!important;
     font-family: titlefont;
     font-size: 14px;
-    border: none;
     text-transform: none;
     background-color: #a5cc00!important;
     border-radius: 0;
+    line-height: 14px;
 }
 
-/**
-.num-pad > div{
+.results{
+    background: #333!important;
+    color: #ffffff!important;
+    position: absolute;
+    bottom:0px;
+    width:100%;
+    z-index:3;
+    opacity: 0.95;
+    top:25%;
+    transition: all  0.5s ease-out;
+    -webkit-transition: all 0.5s  ease-out;
 }
-
-
-**/
+    .results > div{
+        border-bottom: 1px dashed #666;
+        height: calc(80%/3);
+        position:relative;
+    }
+        .results > div > .label{
+            position: absolute;
+            top:10px;
+            font-family: titlefont;
+            font-size: 10px;
+            text-transform: uppercase;
+            color:#a5cc00;
+            left:10px;
+        }
+        .results > div > .value{
+            font-family: mainfont;
+            font-size: 35px;
+            text-align: right;
+            position: absolute;
+            top:calc( (50% - (35px)/2) + 10px);
+            width: 100%;
+            right:10px;
+        }
+        .results > .last{
+            border-bottom: none;
+        }
+    .results .close{
+        color: #ffffff!important;
+        font-family: titlefont;
+        font-size: 35px!important;
+        border: none;
+        text-transform: none;
+        background-color: #a5cc00!important;
+        border-radius: 0;
+        line-height: 14px;
+        width: 100%;
+        padding:20px;
+        position:absolute;
+        bottom: 0;
+        text-transform: uppercase;
+        transition: all  0.5s linear;
+        -webkit-transition: all 0.5s  linear;
+        height: 20%;
+    }
+.show-panel{
+    top:25%;
+}
+.hide-panel{
+    top:100%;
+    bottom:-100%;
+}

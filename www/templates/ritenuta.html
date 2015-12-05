@@ -1,0 +1,44 @@
+<ion-view view-title="Calcolo ritenuta d'acconto">
+  <ion-content scroll="false">
+
+    <div class="primary-panel">
+        <div class="calc-screen">
+            {{val}} &euro;
+        </div>
+    </div>
+
+    <div class="num-pad">
+        <button class="button r1 c1 one-third" ng-click="push(7)">7</button>
+        <button class="button r1 c2 one-third" ng-click="push(8)">8</button>
+        <button class="button r1 c3 one-third" ng-click="push(9)">9</button>
+        <button class="button r2 c1 one-third" ng-click="push(4)">4</button>
+        <button class="button r2 c2 one-third" ng-click="push(5)">5</button>
+        <button class="button r2 c3 one-third" ng-click="push(6)">6</button>
+        <button class="button r3 c1 one-third" ng-click="push(1)">1</button>
+        <button class="button r3 c2 one-third" ng-click="push(2)">2</button>
+        <button class="button r3 c3 one-third" ng-click="push(3)">3</button>
+        <button class="button r4 c1 one-third" ng-click="push(0)">0</button>
+        <button class="button r4 c2 one-third" ng-click="dot()">.</button>
+        <button class="button r4 c3 one-third"  ng-click="backspace()" on-hold="clearData()"><i class="ion-backspace-outline"></i></button>
+        <button class="button r5 c1 half calculate" ng-click="calcByLordo()">Dal lordo</button>
+        <button class="button r5 c2h half calculate" ng-click="calcByNetto()">Dal netto</button>
+    </div>
+
+    <div class="results {{panel}}" on-swipe-down="hidepanel()">
+        <div>
+            <div class="label">Lordo</div>
+            <div class="value">{{lordo| number:2}} <small>&euro;</small></div>
+        </div>
+        <div>
+            <div class="label">Netto</div>
+            <div class="value">{{netto| number:2}} <small>&euro;</small></div>
+        </div>
+        <div class="last">
+            <div class="label">Ritenuta</div>
+            <div class="value">{{ritenuta| number:2}} <small>&euro;</small></div>
+        </div>
+        <button class="button close" ng-click="hidepanel()"><i class="ion-ios-close"></i></button>
+    </div>
+
+  </ion-content>
+</ion-view>

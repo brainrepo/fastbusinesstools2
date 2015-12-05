@@ -1,56 +1,168 @@
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('RitenutaCtrl', function($scope) {
+  $scope.val = "";
+  $scope.netto = "";
+  $scope.lordo = "";
+  $scope.ritenuta = "";
+  $scope.panel = "hide-panel";
+
+  $scope.clear = function(){
+    $scope.val = "";
+    $scope.netto = "";
+    $scope.lordo = "";
+    $scope.ritenuta = "";
+  }
+
+  $scope.push = function(vala){
+    if($scope.val .indexOf(".") > -1){
+      var partials = $scope.val.split(".");
+      if(partials[1].length < 2){
+        $scope.val += vala;
+        return;
+      }
+      return;
+    }
+    $scope.val += vala;
+  }
+
+  $scope.backspace = function(){
+    $scope.val = $scope.val.substring(0, ($scope.val).length - 1);
+  }
+
+  $scope.dot = function(){
+    if($scope.val .indexOf(".") == -1){
+      $scope.val += ".";
+    }
+  }
+
+  $scope.clearData = function(){
+    $scope.clear();
+  }
+
+  $scope.calcByNetto = function(){
+    
+    $scope.netto = $scope.val;
+    $scope.lordo = $scope.val / 0.8;
+    $scope.ritenuta = $scope.val * 0.25;
+
+    $scope.panel = "show-panel";
+    ////$scope.clear();
+  }
+
+  $scope.calcByLordo = function(){
+    
+    $scope.netto = $scope.val * 0.8;
+    $scope.lordo = $scope.val;
+    $scope.ritenuta = $scope.val * 0.2;
+    //$scope.clear();
+    $scope.panel = "show-panel";
+  }
+
+  $scope.hidepanel = function(){
+    $scope.panel = "hide-panel";
+  }
+
+
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+
+
+
+
+.controller('IvaCtrl', function($scope) {
+  $scope.val = "";
+  $scope.netto = "";
+  $scope.lordo = "";
+  $scope.ritenuta = "";
+  $scope.percentuale = 22;
+  $scope.panel = "hide-panel";
+  $scope.ivaSector = "hide-panel";
+
+  $scope.clear = function(){
+    $scope.val = "";
+    $scope.netto = "";
+    $scope.lordo = "";
+    $scope.ritenuta = "";
+  }
+
+  $scope.push = function(vala){
+    if($scope.val .indexOf(".") > -1){
+      var partials = $scope.val.split(".");
+      if(partials[1].length < 2){
+        $scope.val += vala;
+        return;
+      }
+      return;
+    }
+    $scope.val += vala;
+  }
+
+  $scope.backspace = function(){
+    $scope.val = $scope.val.substring(0, ($scope.val).length - 1);
+  }
+
+  $scope.dot = function(){
+    if($scope.val .indexOf(".") == -1){
+      $scope.val += ".";
+    }
+  }
+
+  $scope.clearData = function(){
+    $scope.clear();
+  }
+
+  $scope.calcByNetto = function(){
+    
+    $scope.netto = $scope.val;
+    $scope.lordo = $scope.val * (($scope.percentuale + 100) / 100);
+    $scope.iva = $scope.val * ($scope.percentuale / 100);
+
+    $scope.panel = "show-panel";
+    ////$scope.clear();
+  }
+
+  $scope.calcByLordo = function(){
+    
+    $scope.netto = $scope.val / (1 + ($scope.percentuale / 100));
+    $scope.lordo = $scope.val;
+    $scope.iva = $scope.netto * ($scope.percentuale / 100);
+    //$scope.clear();
+    $scope.panel = "show-panel";
+  }
+
+  $scope.calcByIva = function(){
+    
+    $scope.netto = $scope.val * 100 / $scope.percentuale;
+    $scope.lordo = $scope.val * ($scope.percentuale + 100) / $scope.percentuale;
+    $scope.iva = $scope.val;
+    //$scope.clear();
+    $scope.panel = "show-panel";
+  }
+
+  $scope.hidepanel = function(){
+    $scope.panel = "hide-panel";
+  }
+
+  $scope.hideAliquotapanel = function(){
+    $scope.ivaSector = "hide-panel";
+  }
+
+  $scope.showAliquotapanel = function(){
+    $scope.ivaSector = "show-panel";
+  }
+
+  $scope.setPercentuale = function(percentuale)
+  {
+    $scope.percentuale = percentuale;
+    $scope.ivaSector = "hide-panel";
+    $scope.clear();
+  }
+
+
+
+})
+;
